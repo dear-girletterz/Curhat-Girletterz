@@ -207,6 +207,11 @@
     <div class="container" id="dashboardContainer" style="display:none;"></div>
 
     <script type="module">
+        // 🔒 SATPAM PENJAGA: Cek apakah user sudah login atau belum
+if (localStorage.getItem("admin_logged_in") !== "true") {
+    alert("Eits, mau menyelinap ya? Login dulu gih! 😜");
+    window.location.href = "login.html";
+}
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
