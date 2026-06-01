@@ -3,65 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruang Curhat Online</title>
+    <title>Dear, Girletterz 💌</title>
+    <!-- Google Fonts untuk font estetik & soft -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        textarea { width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; resize: none; box-sizing: border-box; font-size: 16px; }
-        button { width: 100%; background-color: #007bff; color: white; border: none; padding: 12px; border-radius: 8px; margin-top: 10px; cursor: pointer; font-weight: bold; font-size: 16px; }
-        button:hover { background-color: #0056b3; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            /* Gradient langit pastel (biru muda lembut ke pink/peach pastel hangat) */
+            background: linear-gradient(180deg, #b3e5fc 0%, #e1f5fe 50%, #fff3e0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-hidden: relative;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px); /* Efek kaca estetik */
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(179, 229, 252, 0.3);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            z-index: 2; /* Supaya di atas animasi ombak */
+        }
+
+        h1 {
+            color: #4a90e2;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .desc-text {
+            color: #616161;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .tagline {
+            color: #ffb74d; /* Warna peach/oranye hangat */
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 35px;
+            background: rgba(255, 243, 224, 0.8);
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        /* Desain Tombol */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .btn-curhat {
+            background-color: #4fc3f7; /* Biru langit cerah */
+            color: white;
+        }
+
+        .btn-curhat:hover {
+            background-color: #29b6f6;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 195, 247, 0.4);
+        }
+
+        .btn-cek {
+            background-color: #ffffff;
+            color: #4a90e2;
+            border: 2px solid #b3e5fc;
+        }
+
+        .btn-cek:hover {
+            background-color: #f6fbfd;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Dekorasi Tambahan: Animasi Ombak Lembut di Background bawah */
+        .ocean {
+            height: 150px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .wave {
+            background: url('https://cdn.jsdelivr.net/gh/frontnerd/CSS-Wave-Animation@master/wave.svg') repeat-x;
+            position: absolute;
+            bottom: -5px;
+            width: 6400px;
+            height: 100%;
+            animation: wave 12s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+            transform: translate3d(0, 0, 0);
+            opacity: 0.15;
+        }
+
+        .wave:nth-of-type(2) {
+            bottom: -15px;
+            animation: wave 9s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 9s ease -1.25s infinite;
+            opacity: 0.2;
+        }
+
+        @keyframes wave {
+            0% { margin-left: 0; }
+            100% { margin-left: -1600px; }
+        }
+
+        @keyframes swell {
+            0%, 100% { transform: translate3d(0,-25px,0); }
+            50% { transform: translate3d(0,-5px,0); }
+        }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <h2>Formulir Curhat ✍️</h2>
-    <p>Ceritakan apa saja di sini secara anonim.</p>
-    <textarea id="teksCurhat" placeholder="Ketik di sini..."></textarea>
-    <button id="btnKirim">Kirim Curhatan</button>
-    <p id="notif" style="color: green; display: none; font-weight: bold; margin-top: 10px;">Curhatan berhasil terkirim! 🕊️</p>
-</div>
+    <!-- Kotak Utama -->
+    <div class="container">
+        <h1>Dear, Girletterz 💌</h1>
+        <p class="desc-text">Mungkin aku nggak selalu punya jawaban yang "sempurna", 
+        <p tapi aku bakal berusaha buat ngertiin perasaan kalian kok!
+        
+        <p class="tagline">🍃 Tempat cerita tanpa di-judge 🍃</p>
+        
+        <!-- Tombol Navigasi -->
+        <div class="btn-group">
+            <a href="curhat.html" class="btn btn-curhat">Kirim Curhat 💬</a>
+            <a href="cek.html" class="btn btn-cek">Cek Balasan 🪧</a>
+        </div>
+    </div>
 
-<!-- Firebase Script -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  // ⚠️ TEMPELKAN KODE FIREBASE CONFIG KAMU DI BAWAH INI
-  const firebaseConfig = {
-    apiKey: "AIzaSyAEON1nJICGSzYgdcYxgw7EZAV1i1-0ubE",
-  authDomain: "dear-girletterz-c50fa.firebaseapp.com",
-  databaseURL: "https://dear-girletterz-c50fa-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "dear-girletterz-c50fa",
-  storageBucket: "dear-girletterz-c50fa.firebasestorage.app",
-  messagingSenderId: "740636160372",
-  appId: "1:740636160372:web:f35bd6fbd947a2766d7c21",
-  measurementId: "G-8XFS04PL45"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-
-  document.getElementById('btnKirim').addEventListener('click', function() {
-      const isinya = document.getElementById('teksCurhat').value;
-      if(isinya.trim() === "") {
-          alert("Jangan dikosongin ya, tulis sesuatu dulu.");
-          return;
-      }
-      
-      const curhatRef = ref(database, 'curhatan');
-      push(curhatRef, {
-          isi: isinya,
-          waktu: new Date().toISOString()
-      }).then(() => {
-          document.getElementById('teksCurhat').value = "";
-          document.getElementById('notif').style.display = "block";
-          setTimeout(() => { document.getElementById('notif').style.display = "none"; }, 3000);
-      }).catch((err) => {
-          alert("Gagal kirim: " + err.message);
-      });
-  });
-</script>
+    <!-- Background Ombak Estetik -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
 </body>
 </html>
