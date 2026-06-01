@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruang Curhat Online</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        textarea { width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; resize: none; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; background-color: #007bff; color: white; border: none; padding: 12px; border-radius: 8px; margin-top: 10px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Formulir Curhat ✍️</h2>
+    <p>Ceritakan apa saja di sini secara anonim.</p>
+    <textarea id="teksCurhat" placeholder="Ketik di sini..."></textarea>
+    <button id="btnKirim">Kirim Curhatan</button>
+    <p id="notif" style="color: green; display: none; font-weight: bold; margin-top: 10px;">Curhatan berhasil terkirim! 🕊️</p>
+</div>
+
+<!-- Firebase Script -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // ⚠️ TEMPELKAN KODE FIREBASE CONFIG KAMU DI BAWAH INI
+  const firebaseConfig = {
+    apiKey: "PASTE_DI_SINI",
+    authDomain: "PASTE_DI_SINI",
+    databaseURL: "PASTE_DI_SINI",
+    projectId: "PASTE_DI_SINI",
+    storageBucket: "PASTE_DI_SINI",
+    messagingSenderId: "PASTE_DI_SINI",
+    appId: "PASTE_DI_SINI"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  document.getElementById('btnKirim').addEventListener('click', function() {
+      const isinya = document.getElementById('teksCurhat').value;
+      if(isinya.trim() === "") {
+          alert("Jangan dikosongin ya, tulis sesuatu dulu.");
+          return;
+      }
+      
+      const curhatRef = ref(database, 'curhatan');
+      push(curhatRef, {
+          isi: isinya,
+          waktu: new Date().toISOString()
+      }).then(() => {
+          document.getElementById('teksCurhat').value = "";
+          document.getElementById('notif').style.display = "block";
+          setTimeout(() => { document.getElementById('notif').style.display = "none"; }, 3000);
+      }).catch((err) => {
+          alert("Gagal kirim: " + err.message);
+      });
+  });
+</script>
+
+</body>
+</html>
