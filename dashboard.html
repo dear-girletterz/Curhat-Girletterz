@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin 🔒</title>
-    <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -117,6 +116,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            position: relative;
         }
 
         textarea {
@@ -138,6 +138,36 @@
             box-shadow: 0 0 0 3px rgba(127, 164, 199, 0.1);
         }
 
+        /* Baris Tombol di Bawah Textarea */
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Tombol Ikon Sampah */
+        .btn-delete {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .btn-delete:hover {
+            background: #e74c3c;
+            color: white;
+            transform: translateY(-1px);
+        }
+
         .btn-reply {
             font-family: 'Poppins', sans-serif;
             font-size: 0.85rem;
@@ -148,7 +178,6 @@
             background-color: #7fa4c7;
             color: white;
             cursor: pointer;
-            align-self: flex-end;
             transition: all 0.3s ease;
         }
 
@@ -169,19 +198,17 @@
 
     <div class="header">
         <h1>Dashboard Admin 🔒</h1>
-        <p>Tempat dengerin cerita mereka tanpa nge-judge.</p>
+        <p>Tempat dengerin cerita mereka tanpa nge-judge. Bales yang bener euyy 💐</p>
     </div>
 
-    <!-- Wadah penampung semua list curhatan -->
     <div class="container" id="loading">
         <p style="text-align: center; color: #7f8c8d;">Memuat curhatan...</p>
     </div>
     <div class="container" id="dashboardContainer" style="display:none;"></div>
 
-    <!-- Firebase Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         // ⚠️ PASTE KODE FIREBASE CONFIG KAMU DI SINI
         const firebaseConfig = {
@@ -200,17 +227,15 @@
 
         const curhatRef = ref(database, 'curhatan');
 
-        // Mengambil dan memantau data curhatan secara real-time
         onValue(curhatRef, (snapshot) => {
             document.getElementById('loading').style.display = "none";
             const container = document.getElementById('dashboardContainer');
             container.style.display = "flex";
-            container.innerHTML = ""; // Bersihkan kontainer sebelum merender ulang
+            container.innerHTML = ""; 
 
             if (snapshot.exists()) {
                 const allData = snapshot.val();
                 
-                // Ubah object ke array lalu urutkan berdasarkan waktu paling baru
                 const sortedKeys = Object.keys(allData).sort((a, b) => {
                     return new Date(allData[b].waktu) - new Date(allData[a].waktu);
                 });
@@ -218,16 +243,13 @@
                 sortedKeys.forEach((kode) => {
                     const data = allData[kode];
                     
-                    // Format waktu agar lebih estetik dan gampang dibaca remaja Indonesia
                     const opsiWaktu = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
                     const tanggalFormat = new Date(data.waktu).toLocaleDateString('id-ID', opsiWaktu);
 
-                    // Tentukan status balasan
                     const sudahDibalas = data.balasan && data.balasan.trim() !== "";
                     const statusClass = sudahDibalas ? "status-sudah" : "status-belum";
                     const statusText = sudahDibalas ? "Sudah Dibalas ✅" : "Belum Dibalas ⏳";
 
-                    // Buat elemen HTML untuk kartu curhat
                     const card = document.createElement('div');
                     card.className = "curhat-card";
                     card.innerHTML = `
@@ -241,7 +263,10 @@
                         <div class="curhat-isi">${data.isi}</div>
                         <div class="reply-section">
                             <textarea id="reply-${kode}" placeholder="Tulis kata-kata hangatmu di sini...">${data.balasan || ""}</textarea>
-                            <button class="btn-reply" onclick="kirimBalasan('${kode}')">Kirim Balasan ✨</button>
+                            <div class="action-row">
+                                <button class="btn-delete" onclick="hapusCurhat('${kode}')">🗑️ Hapus</button>
+                                <button class="btn-reply" onclick="kirimBalasan('${kode}')">Kirim Balasan ✨</button>
+                            </div>
                         </div>
                     `;
                     container.appendChild(card);
@@ -251,16 +276,14 @@
             }
         });
 
-        // Fungsi Global untuk Mengirimkan Balasan ke Firebase
         window.kirimBalasan = function(kode) {
             const teksBalasan = document.getElementById(`reply-${kode}`).value;
             
             if (teksBalasan.trim() === "") {
-                alert("Kotak balasannya diisi dulu ya cantik/ganteng!");
+                alert("Kotak balasannya diisi dulu ya!");
                 return;
             }
 
-            // Update data balasan di Firebase berdasarkan kodenya
             const spesifikRef = ref(database, 'curhatan/' + kode);
             update(spesifikRef, {
                 balasan: teksBalasan
@@ -269,6 +292,21 @@
             }).catch((err) => {
                 alert("Gagal mengirim balasan: " + err.message);
             });
+        }
+
+        // FUNGSI BARU: Untuk menghapus data dari Firebase
+        window.hapusCurhat = function(kode) {
+            // Memunculkan konfirmasi biar gak sengaja kepencet hapus
+            const yakin = confirm(`Kamu yakin mau menghapus curhatan dengan kode ${kode}? Data akan hilang permanen lho.`);
+            
+            if (yakin) {
+                const spesifikRef = ref(database, 'curhatan/' + kode);
+                remove(spesifikRef).then(() => {
+                    alert(`Curhatan ${kode} berhasil dihapus! 🗑️`);
+                }).catch((err) => {
+                    alert("Gagal menghapus: " + err.message);
+                });
+            }
         }
     </script>
 </body>
