@@ -47,23 +47,42 @@
             margin-bottom: 25px;
         }
 
+        /* Wrapper Input Dibuat Relative & Flex agar Ikon Mata Bisa Sejajar */
         .input-wrapper {
             background: rgba(255, 255, 255, 0.8);
             border-radius: 16px;
             padding: 12px 15px;
             margin-bottom: 20px;
             border: 1px solid rgba(127, 164, 199, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         input {
-            width: 100%;
+            width: 85%;
             border: none;
             outline: none;
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             color: #495057;
             background: transparent;
-            text-align: center;
+            text-align: left; /* Diubah ke kiri biar rapi saat digabung tombol mata */
+            padding-left: 5px;
+        }
+
+        /* Desain Ikon Mata */
+        .toggle-password {
+            cursor: pointer;
+            user-select: none;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            transition: color 0.2s ease;
+            padding-right: 5px;
+        }
+
+        .toggle-password:hover {
+            color: #5b73a7;
         }
 
         .btn-login {
@@ -94,8 +113,10 @@
         <p>Silakan masukkan password rahasia kamu</p>
         
         <div class="input-wrapper">
-            <!-- Input Password rahasia -->
+            <!-- Input Password -->
             <input type="password" id="passwordInput" placeholder="Ketik password di sini...">
+            <!-- Tombol Mata 👀 -->
+            <span class="toggle-password" id="eyeIcon">👁️</span>
         </div>
         
         <button id="btnLogin" class="btn-login">Masuk Dashboard ✨</button>
@@ -105,11 +126,24 @@
         // 🔑 GANTI TULISAN "gurlz123" DI BAWAH INI JADI PASSWORD YANG KAMU MAU!
         const PASSWORD_RAHASIA = "admin@girliez.com"; 
 
+        const passwordInput = document.getElementById('passwordInput');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        // Logika untuk Intip Password (Show/Hide)
+        eyeIcon.addEventListener('click', function () {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerText = '🔒'; // Berubah jadi gembok pas kebuka (atau tetep 👁️ juga boleh)
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerText = '👁️'; // Balik jadi mata lagi
+            }
+        });
+
         document.getElementById('btnLogin').addEventListener('click', function() {
-            const inputUser = document.getElementById('passwordInput').value;
+            const inputUser = passwordInput.value;
 
             if (inputUser === PASSWORD_RAHASIA) {
-                // Simpan tanda login sukses di browser kamu selama 1 hari
                 localStorage.setItem("admin_logged_in", "true");
                 alert("Login sukses! Selamat bekerja Admin Kiyutt 😗");
                 window.location.href = "dashboard.html";
@@ -118,8 +152,7 @@
             }
         });
 
-        // Bisa login juga dengan menekan tombol Enter pada keyboard
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        passwordInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 document.getElementById('btnLogin').click();
             }
