@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dear, Girletterz 💌</title>
-    <!-- Google Fonts untuk font estetik & soft -->
+    <!-- Google Fonts: Poppins (Clean, Modern, Aesthetic) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -17,162 +17,120 @@
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
-            /* Gradient langit pastel (biru muda lembut ke pink/peach pastel hangat) */
-            background: linear-gradient(180deg, #b3e5fc 0%, #e1f5fe 50%, #fff3e0 100%);
+            font-family: 'Poppins', sans-serif;
+            /* Gradient langit senja pastel yang sangat kalem (Soft Blue ke Lavender Hint) */
+            background: linear-gradient(135deg, #d4eaf7 0%, #eef1f6 50%, #e8dbfc 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-hidden: relative;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px); /* Efek kaca estetik */
-            padding: 40px 30px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(179, 229, 252, 0.3);
+        .card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px); /* Efek Glassmorphism transparan estetik */
+            -webkit-backdrop-filter: blur(20px);
+            padding: 45px 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(165, 180, 200, 0.2);
             width: 100%;
-            max-width: 450px;
+            max-width: 420px;
             text-align: center;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            z-index: 2; /* Supaya di atas animasi ombak */
+            border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
         h1 {
-            color: #4a90e2;
-            font-size: 2rem;
+            color: #5b73a7; /* Biru muted denim, kalem di mata */
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
         }
 
         .desc-text {
-            color: #616161;
-            font-size: 0.95rem;
+            color: #6c757d;
+            font-size: 0.9rem;
             line-height: 1.6;
             margin-bottom: 25px;
-            font-weight: 500;
+            font-weight: 400;
+            padding: 0 10px;
         }
 
         .tagline {
-            color: #ffb74d; /* Warna peach/oranye hangat */
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 35px;
-            background: rgba(255, 243, 224, 0.8);
-            padding: 8px 15px;
-            border-radius: 50px;
+            color: #8e7cc3; /* Ungu pastel teduh */
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 40px;
+            background: rgba(232, 219, 252, 0.5);
+            padding: 6px 16px;
+            border-radius: 100px;
             display: inline-block;
+            letter-spacing: 0.5px;
         }
 
-        /* Desain Tombol */
+        /* Group Tombol */
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 14px;
         }
 
         .btn {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            padding: 15px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 14px 20px;
             border: none;
-            border-radius: 20px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: block;
+            letter-spacing: 0.3px;
         }
 
+        /* Tombol Utama (Kirim Curhat) */
         .btn-curhat {
-            background-color: #4fc3f7; /* Biru langit cerah */
+            background-color: #7fa4c7; /* Biru pastel estetik */
             color: white;
+            box-shadow: 0 8px 20px rgba(127, 164, 199, 0.25);
         }
 
         .btn-curhat:hover {
-            background-color: #29b6f6;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(79, 195, 247, 0.4);
+            background-color: #6b92b7;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(127, 164, 199, 0.35);
         }
 
+        /* Tombol Sekunder (Cek Balasan) */
         .btn-cek {
-            background-color: #ffffff;
-            color: #4a90e2;
-            border: 2px solid #b3e5fc;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #5b73a7;
+            border: 1px solid rgba(127, 164, 199, 0.4);
         }
 
         .btn-cek:hover {
-            background-color: #f6fbfd;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Dekorasi Tambahan: Animasi Ombak Lembut di Background bawah */
-        .ocean {
-            height: 150px;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            background: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .wave {
-            background: url('https://cdn.jsdelivr.net/gh/frontnerd/CSS-Wave-Animation@master/wave.svg') repeat-x;
-            position: absolute;
-            bottom: -5px;
-            width: 6400px;
-            height: 100%;
-            animation: wave 12s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-            transform: translate3d(0, 0, 0);
-            opacity: 0.15;
-        }
-
-        .wave:nth-of-type(2) {
-            bottom: -15px;
-            animation: wave 9s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 9s ease -1.25s infinite;
-            opacity: 0.2;
-        }
-
-        @keyframes wave {
-            0% { margin-left: 0; }
-            100% { margin-left: -1600px; }
-        }
-
-        @keyframes swell {
-            0%, 100% { transform: translate3d(0,-25px,0); }
-            50% { transform: translate3d(0,-5px,0); }
+            background-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
         }
     </style>
 </head>
 <body>
 
-    <!-- Kotak Utama -->
-    <div class="container">
+    <!-- Kartu Utama -->
+    <div class="card">
         <h1>Dear, Girletterz 💌</h1>
-        <p class="desc-text">Mungkin aku nggak selalu punya jawaban yang "sempurna", 
-        <p tapi aku bakal berusaha buat ngertiin perasaan kalian kok!
+        <p class="desc-text">Mungkin aku nggak selalu punya jawaban yang "sempurna", tapi aku bakal berusaha buat ngertiin perasaan kalian kok!</p>
         
         <p class="tagline">🍃 Tempat cerita tanpa di-judge 🍃</p>
         
-        <!-- Tombol Navigasi -->
+        <!-- Tombol Menu -->
         <div class="btn-group">
             <a href="curhat.html" class="btn btn-curhat">Kirim Curhat 💬</a>
             <a href="cek.html" class="btn btn-cek">Cek Balasan 🪧</a>
         </div>
-    </div>
-
-    <!-- Background Ombak Estetik -->
-    <div class="ocean">
-        <div class="wave"></div>
-        <div class="wave"></div>
     </div>
 
 </body>
